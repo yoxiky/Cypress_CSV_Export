@@ -1,0 +1,23 @@
+{
+  "mysql": {
+    "host": "数据库内网 IP",
+    "port": 3306,
+    "user": "tire_readonly",
+    "password": "填密码",
+    "database": "填数据库名"
+  },
+  "email": {
+    "smtp": {
+      "host": "smtp.gmail.com",
+      "port": 587,
+      "secure": false,
+      "user": "your@gmail.com",
+      "pass": "Gmail App Password"
+    },
+    "from": "CSV Export <your@gmail.com>",
+    "to": ["csv-ops@yourcompany.com"]
+  },
+  "timezone": "Australia/Brisbane",
+  "archive_retention_days": 7,
+  "log_retention_days": 14
+}
