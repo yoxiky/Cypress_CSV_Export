@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Sensitive config
+config.json
+credentials/
+
+# Runtime data
+logs/
+archive/
+*.log
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Test artifacts
+coverage/
+.nyc_output/
