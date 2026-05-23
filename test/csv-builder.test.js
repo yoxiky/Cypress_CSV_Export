@@ -27,7 +27,8 @@ test('所有行尾为 CRLF，无单独 LF', () => {
 
 test('表头固定为 size,name,stock,price', () => {
   const lines = build([]).split(CRLF);
-  assert.equal(lines[0], 'size,name,stock,price');
+  // 第一行前缀是 BOM，去掉后比较
+  assert.equal(lines[0].replace(/^﻿/, ''), 'size,name,stock,price');
 });
 
 // ── 正常数据行 ────────────────────────────────────────────────────────────────
