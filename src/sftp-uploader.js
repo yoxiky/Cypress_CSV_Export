@@ -60,9 +60,11 @@ async function _uploadOnce(sftpConfig, filename, content) {
     const tmpPath   = remoteDir + filename + '.tmp';
     const finalPath = remoteDir + filename;
 
-    // 写入 .tmp，再原子重命名，客户不会读到半成品
+    // 写入 .tmp，再重命名覆盖，客户不会读到半成品
     const buf = Buffer.from(content, 'utf8');
     await sftp.put(buf, tmpPath);
+    // SFTP rename 不自动覆盖，先尝试删除目标再重命名
+    try { await sftp.delete(finalPath); } catch { /* 目标不存在时忽略 */ }
     await sftp.rename(tmpPath, finalPath);
 
     logger.info(`[SFTP] 上传成功：${sftpConfig.host}:${remoteDir}${filename}`);
