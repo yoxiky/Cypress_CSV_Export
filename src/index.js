@@ -1,11 +1,12 @@
-// 入口：S1 阶段只做基础设施初始化（config + logger + mysql 连通性）
-// 后续阶段会在此之后启动 cron 调度
+// 服务入口：加载配置 → 初始化日志 → 测试 MySQL → 启动 cron 调度
 const logger = require('./logger');
 const { testConnection, pool } = require('./mysql');
+const { startCron } = require('./cron');
 
 async function main() {
   logger.info('=== Cypress CSV Export 服务启动 ===');
 
+  // MySQL 连通性检查
   try {
     logger.info('正在测试 MySQL 连接...');
     await testConnection();
@@ -16,10 +17,10 @@ async function main() {
     process.exit(1);
   }
 
-  logger.info('S1 骨架就绪，服务已启动');
+  // 注册 cron 任务（从 DB 读取客户配置）
+  await startCron();
 
-  // S1 阶段尚未启动任何定时任务或 HTTP 服务，先停留在这里
-  // 后续 S8 会替换为 cron 调度的注册
+  logger.info('服务启动完成，等待定时任务触发...');
 }
 
 main().catch((err) => {
