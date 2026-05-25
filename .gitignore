@@ -19,3 +19,6 @@ Thumbs.db
 # Test artifacts
 coverage/
 .nyc_output/
+
+# Downloaded CSV output
+*.csv
